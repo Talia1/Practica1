@@ -1,0 +1,43 @@
+#Numero de profesionistas en millones, rango de 5 a 8
+prof<-sample(5:8,60,replace=TRUE)
+ind<-sample(0:5,60,replace=TRUE)
+ocup<-sample(40:60,60,replace=TRUE)
+desoc<-sample(3:8,60,replace=TRUE)
+#una vez que generamos los datos hacer un dat frame de los 4 objetos
+pceu<-data.frame(prof,ind,ocup,desoc)
+#mostrar en consolo los primeros 12 datos (renglones) y ultimos 12 datos 
+pceus12<-pceu[1:12,] #muestra los primeros 12 renglones
+pceu[49:60,]
+#3)convertir los objetos en series de tiempo desde el data frame iniciando en 2010
+# y son datos mensuales
+profts <- ts(prof,frequency = 12,start = (2010))
+end(profts)
+indts <- ts(ind,frequency = 12,start = (2010))
+end(indts)
+ocupts <- ts(ocup,frequency = 12,start = (2010))
+end(ocupts)
+desocts <- ts(desoc,frequency = 12,start = (2010))
+end(desocts)
+#4)graficar los profesionistas y ocupados en la misma grafica 
+plot(cbind(profts,ocupts))
+plot(cbind(indts,desocts))
+plot(cbind(profts,ocupts,indts,desocts))#grafica de todas juntas 
+#graficar dos sin cbind
+plot.ts(pceu[,c(1,3)])
+#para declarar una serie de tiempo multiple
+
+#EJERCICIO
+pib<-read.csv("C:\\Users\\Sala-D3\\Documents\\PIB.csv")
+first<-pib[2:12,]
+second<-pib[13:22,]
+third<-pib[23:32,]
+fourth<-pib[33:37,]
+#Series de tiempo
+firstts <- ts(first[,2],frequency = 1,start = (1980))
+secondts <- ts(second[,2],frequency = 1,start = (1991))
+thirdts <- ts(third[,2],frequency = 1,start = (2001))
+fourthts <- ts(fourth[,2],frequency = 1,start = (2011))
+#Gráficas
+plot(cbind(firstts,secondts))
+plot(cbind(thirdts,fourthts))
+plot(cbind(firstts,secondts,thirdts,fourthts))#grafica de todas juntas
