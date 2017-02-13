@@ -1,0 +1,71 @@
+desocupados<-sample(3:10,120,replace=TRUE)#generar variable aleatoria
+poblacion<-sample(92:98,120,replace=TRUE)#generar variable aleatoria
+asegurados<-sample(45:60,120,replace=TRUE)#generar variable aleatoria
+informales<-sample(23:35,120,replace=TRUE)#generar variable aleatoria
+
+desocuts<-ts(desocupados,frequency=12,start=(2002))#convertir variable en serie de tiempo
+pobts<-ts(poblacion,frequency=12,start=(2002))#convertir variable en serie de tiempo
+asets<-ts(asegurados,frequency=12,start=(2002))#convertir variable en serie de tiempo
+inforts<-ts(informales,frequency=12,start=(2002))#convertir variable en serie de tiempo
+plot(cbind(pobts,asets,inforts))#darle formato a la grafica
+
+seriemultiple<-ts.intersect(desocuts,pobts,asets,inforts)
+#serie de tiempo multiple con las 4 variables
+plot(seriemultiple,main="Serie de tiempo multiple",xlab="Años",
+ylab="Numero de personas",col="green",type="overplotted",pch=1)
+#grafica de serie de tiempo multiple
+
+seriemultiple02.07<-window(seriemultiple,start=c(2002,1),end=c(2007,1))
+seriemultiple02.07<-window(seriemultiple,start=c(2007,1),end=c(2011,12))
+#window es para cortar serie de tiempo y el 1 es el trimestre o mes en 
+este caso mes porque lo declaramos como 12 
+
+plot(seriemultiple02.07,main="Serie de tiempo multiple",xlab="Años",
+ylab="Numero de personas",col="brown")
+plot(seriemultiple02.07,main="Serie de tiempo multiple",xlab="Años",
+ylab="Numero de personas",col="violet")
+
+start(seriemultiple);end(seriemultiple)
+
+
+
+###Ejercicio 4 
+#Obtener 4 series de tiempo con min 30 datos y que se puedan comparar
+##Importarlas, declararlas series de tiempo, graficarlas juntas como serie cada una
+####Crear serie de tiempo multiple y graficar con formato
+##Despues dividir esta series en 3 periodos con intervalos iguales osea 10 c/u
+##Investigar como graficar la serie de tiempo multiple con colores diferentes
+
+
+
+
+precios<-(read.csv("C:\\Users\\Acer\\Documents\\precios.csv"))
+
+ipc<-ts(precios[,2],frequency=252,start=2017,1)
+ipc
+amxl<-ts(precios[,3],frequency=252,start=2017,1)
+amxl
+kofl<-ts(precios[,4],frequency=252,start=2017,1)
+kofl
+inbursa<-ts(precios[,5],frequency=252,start=2017,1)
+inbursa
+
+plot(ipc)
+plot(amxl)
+plot(kofl)
+plot(inbursa)
+
+seriemultiplep<-ts.intersect(ipc,amxl,kofl,inbursa)
+plot(seriemultiplep,main="Serie de tiempo multiple de precios de acciones",xlab="Fecha",
+ylab="Precios",col="pink")
+
+seriemultiple10<-window(seriemultiple,start=c(2017,1),end=c(2017,10))
+seriemultiple10<-window(seriemultiple,start=c(2017,11),end=c(2017,20))
+seriemultiple10<-window(seriemultiple,start=c(2017,21),end=c(2017,30))
+
+plot(seriemultiple10,main="Serie de tiempo multiple",xlab="Fecha",
+ylab="Precios",col="blue")
+plot(seriemultiple02.07,main="Serie de tiempo multiple",xlab="Años",
+ylab="Numero de personas",col="violet")
+plot(seriemultiple02.07,main="Serie de tiempo multiple",xlab="Años",
+ylab="Numero de personas",col="green")
