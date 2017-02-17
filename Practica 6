@@ -1,0 +1,41 @@
+#Para descomponer una serie de tiempo graficamente se utiliza una funcion
+# que se llama decompose, por lo que primero es importante reconocer la serie 
+#de tiempo y despues aplicarle la funcion graficamente
+desoc<-sample(3:8,44,replace = T)
+tdesoc<-ts(desoc,frequency=4,start = 2005)
+plot(decompose(tdesoc))
+plot(tdesoc)
+
+tiie<-(read.csv("C:\\Users\\Sala-D3\\Downloads\\TIIE2015.csv"))
+sttiie<-ts(tiie,frequency=52,start=2005)
+plot(decompose(sttiie))
+plot(sttiie)
+
+pib<-(read.csv("C:\\Users\\Sala-D3\\Downloads\\PIB.csv"))
+stpib<-ts(pib,frequency=4,start=2005)
+plot(decompose(stpib))
+plot(stpib)
+View (stpib)
+summary(stpib)
+names(stpib$trend)
+depibst<-decompose(stpib)
+names(depibst)
+
+
+#EJERCICIO
+
+#consumo<-(read.csv("C:\\Users\\Sala-D3\\Documents\\marco.csv",[file = 9:43,11]))
+consumo<-(read.csv("C:\\Users\\Sala-D3\\Documents\\marco.csv"))
+consumots<-ts(consumo,frequency=12,start=2014)
+plot(consumots)
+plot(decompose(consumots))
+View (consumots)
+summary(consumots)
+names(consumots$trend)
+deconsumots<-decompose(consumots)
+names(depibst)
+depibst$trend
+depibst$seasonal
+depibst$random
+
+#CONCLUSION: La grafica presenta estacionariedad, no tiene mucha tendencia.
