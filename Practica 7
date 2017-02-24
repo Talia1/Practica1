@@ -1,0 +1,32 @@
+####################FOR###########
+u1<-(1:10) #genera 10 entradas
+for(i in 1:10){ #para i que vaya de 1 a 10, esta operacion
+  u1[i]<-u1[i]+2
+  print(u1[i]) #para ver los datos
+}
+
+##############WHILE#################
+s<-7  #determinamos un valor o vector
+while(s<6){s<-s*2; print(s);}   #s sea menor a 6 melo defines asi y lo imprimes
+
+s<-1
+while(s<5){s<-s+1; ;if (s==4)break; print(s);} #si el rsultado es mayor a 4 rompe la serie
+
+s<-1
+while(s<5){s<- 0+1; ;if (s==2)break; print(s);}
+## corre todos los valores porque no encuentra el 2, con el boton stop la rompe
+
+s<-2
+while(s<5){s<- s+1; if (s==3)next; print(s);}
+  
+######TENDENCIA############
+tasa <- read.csv (file.choose())
+tsdes<-ts(tasa,frequency = 4,start = 2005)
+detsdes<-decompose(tsdes,type = "multiplicative")
+detsdes$trend
+detsdes$seasonal
+plot(tsdes,col="blue",main="Tasa de desocupacion trimestral", ylab="Tasas",xlab="Años")
+lines(detsdes$trend,col="red",ylab="Tendencia")#######incorpora en la linea a mi grafica 
+
+########ESTACIONARIEDAD###########
+monthplot(detsdes$seasonal,main="IVEc",ylab="ivec trimestral") 
