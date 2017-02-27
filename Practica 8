@@ -1,0 +1,59 @@
+#####Descomposicion clásica
+#####Se utiliza la función descompose
+### Otro tipo de descomposicion de la estacionariedad
+####Tendencia y estacionariedad es la descomposicion
+#### por Loess la cual esta basada en un algoritmo que permite
+#### descomponer las series de tiempo en 3 elementos: estacionariedad,
+#####tendencia y aleatoriedad, una de las ventajas de esta descomposicion
+#### es el calculo de la estacionariedad que se obtienen valores de 
+###estacionariedad no constantes, en contraste con el metodo clasico de descomposicion
+
+
+
+###### DESCOMPOSICION CLASICA
+###se utiliza la fn decompose por ejemplo
+desocupacion<- read.csv (file.choose())
+class(desocupacion)
+des<-ts(desocupacion[1:48,1],frequency = 4,start=2005)
+class(des)
+desco<-decompose(des)
+tend1<-desco$trend#tendencia 1
+plot(tend1,col="blue",main="Tendencia desocupación",ylab="Tasas",xlab="Años")
+################ DESCOMPOSICION TENDENCIA, ESTACIONAL POR LOOSE
+##### se utiliza la funcion stl()
+###### entonces para descoponer por Loose utilizamos
+desco2<-stl(des,s.window = "periodic",robust=T)#primer argumento es mi serie de tiempo, tendencia window periodica, robustes estadistico(mejor descomposicion)
+names (desco2)
+desco2#para ver la descomposcicion con loose, esta si trae los datos completos
+tend2 <- desco2$time.series[,2]#me extrae la columna 2 osea la tendencia
+tend2
+lines(tend2,col="red")#se le adiere la linea a nuestra primer grafica la de azul
+### entre mas suavizada este la linea me genera un mejor pronostico
+esta2 <- desco2$time.series[,1]##me estrae la columna 1 que es la estacionariedad
+esta2
+
+
+#####Lo mismo pero con el pib################
+pib<- read.csv (file.choose())
+length(pib)
+pibts<-ts(pib[1:35,1],frequency = 4,start=2007)
+des<-decompose(pibts)
+tendencia1<-des$trend#tendencia 1
+plot(tendencia1,col="blue",main="Tendencia pib",ylab="Datos",xlab="Años")
+###Descomponer con loose
+des2<-stl(pibts,s.window = "periodic",robust=T)#primer argumento es mi serie de tiempo, tendencia window periodica, robustes estadistico(mejor descomposicion)
+names (des2)
+des2#para ver la descomposcicion con loose, esta si trae los datos completos
+tendencia2 <- des2$time.series[,2]#me extrae la columna 2 osea la tendencia
+tendencia2
+lines(tendencia2,col="red")#se le adiere la linea a nuestra primer grafica la de azul
+### entre mas suavizada este la linea me genera un mejor pronostico
+estacio2 <- des2$time.series[,1]##me estrae la columna 1 que es la estacionariedad
+estacio2
+install.packages("fpp")
+require(fpp)
+ajus <- seasadj(des2)#ajuste estacional
+#####pronostico con metodo ingenuo
+inge1 <- naive(ajus,h=4)####mi serie de tiempo y periods que quieres que te pronostique
+plot(inge1)
+inge1
