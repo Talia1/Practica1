@@ -1,0 +1,24 @@
+install.packages("fpp")
+require(fpp)
+###ESTACIO, TENDENCIA Y CICLICO
+plot(window(elec,start=1980),ylab="Gwh",xlab="year",main="Australian electricity production")
+####ESTACION Y CICLO NO MUCHO TENDENCIA
+plot(bricksq,ylab = "million units",xlab = "year",main="Australian clay brick production")
+###NO TENDENCIA NI ESTACIONARIEDAD, POSIBLE CICLO
+plot(hsales,main="sales of new one-family houses,USA",ylab="Total sales",xlab="year")
+##ver en que meses son los picos 
+seasonplot(elec,s=12,year.labels=TRUE), main="Electricidad", ylab="Año"col=rainbow(20),year.labels.left=TRUE,pch=15)
+###S=ceasonal cuantos periodos 12 meses
+seasonplot(bricksq,s=4,year.labels=TRUE), main="Electricidad", ylab="Año"col=rainbow(20),year.labels.left=TRUE,pch=15)
+
+dec<-decompose(bricksq)
+#eliminando tendencia
+sinesta<-bricksq-dec$seasonal
+sintend<-bricksq-dec$trend
+
+plot(sinesta)
+plot(sintend)
+
+###EJERCICIO
+## ANALIZAR A QUE SE DEBE CADA UNA DE LOS ELEMENTOS ENCONTRADOS DEL PIB DEL 60 A 79
+## TENDENCIA CICLO Y ESTACIO
