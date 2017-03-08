@@ -1,0 +1,31 @@
+###Para descomponer una serie en un modelo aditivo
+#####tdesocadi<-decompose(tdesoc) ###para descomponer la serie de tiempo por decompose
+##da el modelo aditivo
+####Ahora para descomponer un modelo multiplicativo
+
+deso<-data.frame(read.csv())
+desot<-ts(deso,frequency = 4,start = 2005)
+plot(desot)
+lines(eeadj,col="blue")##graficar serie sin estacionariedad
+dectsd<-decompose(desot)###descomposicion por modelo aditivo
+dectsdmul<-decompose(desot,type="mult")###descomp por modelo multiplicativo
+
+##graficamos los dos moedelos
+plot(dectsd)
+plot(dectsdmul)
+
+###Desestacionalizar una serie
+###se destacionaliza una serie de tiempo por diferentes razones
+###1.para poder predecir
+###2.nuestros datos con mayor presicion y sin contar factores
+###3.Externos al comportamiento de nuestros datos
+##Dos elementos que permiten desesytacionalizar una serie
+
+require(fpp)
+eeadj<-seasadj(dectsd) ###quitar estacionariedad con fn de R
+eeadj
+plot(eeadj)
+
+sinesta<-desot-dectsd$seasonal ####quitar estacionariedad a mano
+sinesta
+eeadj-sinesta##matriz de ceros porque es la misma
