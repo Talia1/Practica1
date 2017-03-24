@@ -1,0 +1,31 @@
+############# METODO DE LA DERIVA ########################################
+### Este método consiste en que el pronóstico puede incrementar o reducirse
+### sobre el tiempo, dependiendo del promedio de los cambios historicos
+### de la st, su codigo en R es:
+#rwf(serie,h=num de pronostico,drift=TRUE)
+desoc<-read.csv(file.choose())
+desoct<-ts(desoc)
+install.packages("forecast")
+require (forecast)
+rwf(desoct,h=4,drift=TRUE)
+
+desocmod1<-meanf(desoct,h=10) #### 3 metodo del promedio
+desocmod2<-naive(desoct,h=10)
+desocmod3<-snaive(desoct,h=10)
+desocmod4<-rwf(desoct,h=10,drift=TRUE)
+x11()
+plot(desocmod1, main="Pronostico de desocupacion trimestral")
+lines(desocmod2$mean,col=5) ##mean se refiere al promedio es la media le pides que te grafique la media
+lines(desocmod3$mean,col=6)
+lines(desocmod4$mean,col=7)
+legend("topleft",lty=1,col=c(5,6,7,8),legend = c("media","ingenuu estacional","deriva"))
+#### Estas lineas dentro de la primr grafica
+
+names(desocmod2) #upper=limite superio, lower=lim inferior, fitted=ajuste
+x11()
+plot(desocmod1, main="Pronostico de desocupacion trimestral")
+lines(desocmod2$fitted,col="blue") 
+lines(desocmod3$fitted,col="pink")
+lines(desocmod4$fitted,col="green")
+legend("topleft",lty=1,col=c("blue","pink","green"),legend = c("media","ingenuu estacional","deriva"))
+##Cuando graficamos los residuales no salen porque los residuales tienen valores cercanos a cero y la grafica va de 3 a 6
