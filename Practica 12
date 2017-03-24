@@ -1,0 +1,37 @@
+#MODELOS INGENUOS(RUIDO BLANCO Y CAMINATA ALEATORIA)
+pib<-read.csv(file.choose())
+pibst<-ts(pib)
+acf(pibst)
+
+
+######################### METODOS LINEALES PARA PRONOSTICAR ###############
+################### METODO INGENUO ##########################
+### Son la aplicación de pronósticos lineales
+### como el ingenuo, promedio, ingenuo estacional y el de deriva
+### el pronostico ingenuo esta basado en la última observación que 
+### arroja la serie de tiempo, Es decir este pronóstico asume que la observación 
+### mas importante es la última.
+### funcion en R -> naive(serie, h=numero de pronosticos)
+###le da mucho peso al ultimo dato y es el primer dato del pronostico
+install.packages("forecast")
+require(forecast)
+
+naive(pibst,h=4)
+
+############## METODO PROMEDIO #####################################
+### Este método le da el mismo peso a todos los datos u observaciones
+###es decir, se asume con este método que todas las observaciones
+### tienen la misma importancia por lo que el pronostico
+### es un promedio de todas las observaciones
+### Función para R -> meanf(serie,h=número de pronósticos)
+meanf(pibst,h=4)
+plot(meanf(pibst,h=4))############
+
+############# METODO INGENUO ESTACIONAL ##############################
+### Este método se utiliza en series de tiempo
+## con alta estacionariedad este pronóstico consiste en darle
+### el mayor peso o la mayor ponderación al dato del mismo periodo
+### en el año anterior, por ejemplo trimestre 2 del 2005 es igual al
+### trimestre 2 del 2006
+### la función en R es -> snaive(serie,h=número de pronósticos)
+snaive(pibst,h=4)
