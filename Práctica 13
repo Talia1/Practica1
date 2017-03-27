@@ -1,0 +1,26 @@
+############### 3 SCRIPT CLASE 11
+asa1<-t(data.frame(read.csv("C:\\Users\\Sala-D3\\Downloads\\asalariados.csv",header=T)[7,2:49]))#hearder contar el encabezado, renglon 7 de la columna 2 a la 49
+asa1<-as.numeric(asa1)# quiero que me la conviertas a numerica con el mismo nombre
+asat<-ts(asa1,start = 2005,frequency = 4)#para transponer porque no la toma como serie porque esta en renglon y no en columna pero eso lo hacemos en el principio porque no salio :)
+asat
+#asat<-as.numeric(asat)# quiero que me la conviertas a numerica con el mismo nombre
+###################### Suavizado exponencil en R
+require (forecast)
+mod1<-ses(asat,alpha = 0.1,initial="simple",h=8)## inicial que sea el suavizado exponencial simple, el alpha el parametro para suavizar entre 0 y 1, h=numero de pronosticoa quiero
+mod2<-ses(asat,alpha = 0.3,initial="simple",h=8)##ses suavizado exponencuial
+mod3<-ses(asat,alpha = .95,initial="simple",h=8)
+x11()
+plot(mod1,ylab ="Asalariados",xlab = "Años",main="Asalariados",type="o")
+lines(mod1$fitted,col="brown",type = "o")
+lines(mod2$fitted,col="red",type = "o")
+lines(mod3$fitted,col="green",type = "o")
+lines(mod1$mean,col="brown",type = "o")
+lines(mod2$mean,col="red",type = "o")
+lines(mod3$mean,col="green",type = "o")
+legend("topleft",lty=1,col=c(1,"brown","red","green"),c("datos",expression(alpha==0.1),expression(alpha==0.3),expression(alpha==.95)),pch=11)
+#del mod1 dame los valores ajustados 
+# que diga mean es que me va a graficar los pronosticos
+#toleft superior izquierdo
+#lty grueso de la linea
+#pch cambia los dibujitos =64 es arroba
+#c(1 es el color negro)
