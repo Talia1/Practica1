@@ -1,0 +1,31 @@
+require(foreign)
+coe216<-read.dbf("C:\\Users\\Sala-D3\\Desktop\\coe2t116.dbf")
+ls(coe216) #ls lista de las variables de esa base de datos
+coe216$P6D<-as.numeric(as.character(coe216$P6D))# ami variable p6d de mi base conviertela primero en numerica y luego en caracter
+coesins<-subset(coe216,coe216$P6D==1 | coe216$P6D==2 | coe216$P6D==3 | coe216$P6D==4 | coe216$P6D==5)#|=o
+#base con los puros con trabajador social 
+coe216$sinseg<-ifelse(coe216$P6D>=1&coe216$P6D<=5,1,ifelse(coe216$P6D>=6 & coe216$P6D<=9,2,0))#fn que te dice si coe va de 1 a 5 llamale 1, si va de 6 a 9 llamale 2, a todo lo demas llamale 0
+table(coe216$sinseg)#1 si tienen seguridad social 2 no
+
+coe116<-read.dbf("C:\\Users\\Sala-D3\\Desktop\\coe1t116.dbf")
+
+coe116$P1C<-as.numeric(as.character(coe216$P1C))
+coe116$P1B<-as.numeric(as.character(coe216$P1B))
+coe116$P2_1<-as.numeric(as.character(coe216$P2_1))
+coe116$P2_2<-as.numeric(as.character(coe216$P2_2))
+coe116$P2_3<-as.numeric(as.character(coe216$P2_3))
+coe116$P2B<-as.numeric(as.character(coe216$P2B))
+coe116$P2C<-as.numeric(as.character(coe216$P2C))
+coe116$P1D<-as.numeric(as.character(coe216$P1D))
+
+coe116$deso<-ifelse(coe116$P1C==11,1, 
+                    ifelse((coe116$P1B==2)& (coe116$P2_1==1 |coe116$P2_2==2 |coe116$P2_3==3) &(coe116$P2B==1) & (coe116$P2C!=2 & coe116$P2C!= 9),2,
+                    ifelse ((coe116$P1D==2 | coe116$P1D==9)&(coe116$P2_1==1 |coe116$P2_2==2 |coe116$P2_3==3)&(coe116P2B==1) & (coe116$P2C!=2 & coe116$P2C!= 9),3,0)))
+               
+                    
+ls(coe116)
+table(coe116$deso)
+install.packages("questionr")
+require(questionr)
+wtd.table(coe116$deso,weights=coe116$FAC) ##datos expandidos de la variable deso
+ls(coe116)
